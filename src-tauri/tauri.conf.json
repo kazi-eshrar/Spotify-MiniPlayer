@@ -9,14 +9,21 @@
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
-  "app": {
-    "windows": [
-      {
-        "title": "spotify-miniplayer",
-        "width": 800,
-        "height": 600
-      }
-    ],
+ "app": {
+  "macOSPrivateApi": true,
+  "windows": [
+    {
+      "title": "Lyric Player",
+      "width": 320,
+      "height": 100,
+      "decorations": false,
+      "transparent": true,
+      "alwaysOnTop": false,
+      "resizable": true,
+      "minWidth": 250,
+      "minHeight": 50
+    }
+  ],
     "security": {
       "csp": null
     }

@@ -1,50 +1,29 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import { useWindowSize } from "./useWindowSize";
+
+// Tweak these later once you see what feels right.
+const LYRICS_MIN_WIDTH = 560;
+const CONTROLS_MIN_HEIGHT = 200;
+const SETTINGS_MIN_HEIGHT = 140;
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const { width, height } = useWindowSize();
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  const showLyrics = width >= LYRICS_MIN_WIDTH;
+  const showExtraControls = height >= CONTROLS_MIN_HEIGHT;
+  const showSettings = height >= SETTINGS_MIN_HEIGHT;
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="player">
+      <div className="header" data-tauri-drag-region>
+        Drag me
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+      <div className="debug">
+        {width} x {height}
+        <br />
+        lyrics: {String(showLyrics)} | extra controls: {String(showExtraControls)} | settings: {String(showSettings)}
+      </div>
+    </div>
   );
 }
 
