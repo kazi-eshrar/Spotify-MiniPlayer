@@ -1,7 +1,7 @@
 import "./App.css";
 import { useWindowSize } from "./useWindowSize";
+import Sidebar from "./Sidebar";
 
-// Tweak these later once you see what feels right.
 const LYRICS_MIN_WIDTH = 560;
 const CONTROLS_MIN_HEIGHT = 200;
 const SETTINGS_MIN_HEIGHT = 140;
@@ -15,9 +15,7 @@ function App() {
 
   return (
     <div className="player">
-      <div className="header" data-tauri-drag-region>
-        Drag me
-      </div>
+      <Sidebar />
       <div className="debug">
         {width} x {height}
         <br />
