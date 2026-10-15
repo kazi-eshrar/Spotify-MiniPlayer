@@ -1,3 +1,5 @@
+* { box-sizing: border-box; }
+
 html,
 body,
 #root {
@@ -7,22 +9,71 @@ body,
 }
 
 .player {
+  position: relative;
   height: 100%;
-  background: #000000 ;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 0 10px;
+  transition: padding-left 180ms ease;
+  background: #000000;
   border-radius: 14px;
+  overflow: hidden;
   color: white;
   font-family: system-ui, sans-serif;
+  user-select: none;
 }
 
-.header {
-  padding: 10px 14px;
-  font-size: 12px;
-  opacity: 0.7;
-  cursor: grab;
+/* Slide content right by the sidebar's width (28px) while it's showing */
+.player:hover { padding-left: 30px; }
+
+/* Clicks pass through these to .player, so dragging works over them */
+.art, .track-info { pointer-events: none; }
+
+.art {
+  flex: none;
+  height: calc(100% - 24px);   /* window height minus 12px margin top and bottom */
+  max-height: 160px;           /* stops it from getting huge when tall */
+  aspect-ratio: 1 / 1;         /* width always matches height, so it stays square */
+  border-radius: 6px;
+  background: linear-gradient(135deg, #c9d3d6, #8b8f91);
 }
 
-.debug {
-  padding: 0 14px;
-  font-size: 11px;
-  font-family: monospace;
+.track-info { flex: 1; min-width: 0; }
+.title, .artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+.title { font-size: 14px; font-weight: 400; }
+.artist { font-size: 10px; color: #b3b3b3; margin-top: 4px; }
+
+.icon-btn, .play-btn {
+  flex: none;
+  border: none;
+  background: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.icon-btn:hover { color: #fff; }
+
+.play-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+}
+.play-btn:hover { transform: scale(1.06); }
+
+.progress-track {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: #4d4d4d;
+  pointer-events: none;
+}
+.progress-fill { height: 100%; background: #fff; }
